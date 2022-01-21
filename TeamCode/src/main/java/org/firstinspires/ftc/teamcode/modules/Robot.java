@@ -2,6 +2,14 @@ package org.firstinspires.ftc.teamcode.modules;
 
 public class Robot {
 
-    private Arm arm = new Arm();
+    private Arm arm;
+
+    public Robot() {
+        arm = new Arm();
+    }
+
+    public void update() {
+        arm.update();
+    }
 
 }
