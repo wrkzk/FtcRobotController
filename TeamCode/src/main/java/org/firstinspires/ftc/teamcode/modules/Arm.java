@@ -11,14 +11,14 @@ public class Arm {
 
     private final double scoopOpenPos = 0.085;
     private final double scoopClosedPos = 0.3;
-    private final double scoopDropPos = 0.9;
+    private final double scoopDropPos = 0.95;
 
     private final int stageOneTicks = 80;
-    private final int stageTwoTicks = 595;
+    private final int stageTwoTicks = 695;
 
     private final double stageOnePower = 0.5;
     private final double stageTwoPower = 0.7;
-    private final double armDownPower = 0.2;
+    private final double armDownPower = 0.5;
 
     public Arm() {
         scoop.setPosition(scoopOpenPos);
