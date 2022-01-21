@@ -8,18 +8,17 @@ import org.firstinspires.ftc.teamcode.modules.Arm;
 @TeleOp(name = "Intake/Arm Test Mode", group = "")
 public class ManualOpMode extends LinearOpMode {
 
-    HardwareMap hwMap;1
+    private HardwareMap hwMap;
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Arm arm = new Arm(hwMap);
-
+        Arm arm = new Arm(hwMap, gamepad1);
         waitForStart();
 
         while (opModeIsActive()) {
-            robot.update();
+            arm.update();
         }
     }
 }
