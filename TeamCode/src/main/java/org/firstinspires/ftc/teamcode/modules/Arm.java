@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.modules;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Arm {
 
-    private Servo scoop = hardwareMap.get(DcMotor.class, "scoop");
-    private DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+    private Servo scoop;
+    private DcMotor arm;
     private int currentArmState = 1;
 
     private final double scoopOpenPos = 0.085;
@@ -20,8 +21,14 @@ public class Arm {
     private final double stageTwoPower = 0.7;
     private final double armDownPower = 0.5;
 
-    public Arm() {
+    HardwareMap hwMap;
+
+    public Arm(HardwareMap hwMap) {
         scoop.setPosition(scoopOpenPos);
+
+        this.hwMap = hwMap;
+        this.scoop = hwMap.get(Servo.class, "scoop");
+        this.arm = hwMap.get(DcMotor.class, "arm");
     }
 
     public void armUpStageOne() {
