@@ -30,7 +30,10 @@ public class Drivetrain {
         double wheelPower = gamepad1.left_stick_y * powerScale;
         double turnPower = gamepad1.right_stick_x * powerScale;
 
-
+        frontLeft.setPower(wheelPower + turnPower);
+        frontRight.setPower(wheelPower - turnPower);
+        backLeft.setPower(wheelPower + turnPower);
+        backRight.setPower(wheelPower - turnPower);
     }
 
 }
