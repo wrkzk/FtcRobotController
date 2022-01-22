@@ -27,14 +27,13 @@ public class Arm {
 
     public Arm(HardwareMap hwMap, Gamepad gamepad1) {
         scoop.setPosition(scoopOpenPos);
-
         this.hwMap = hwMap;
         this.gamepad1 = gamepad1;
         this.scoop = hwMap.get(Servo.class, "scoop");
         this.arm = hwMap.get(DcMotor.class, "arm");
     }
 
-    public void armUpStageOne() {
+    private void armUpStageOne() {
         if (currentArmState == 1) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -45,7 +44,7 @@ public class Arm {
         }
     }
 
-    public void armUpStageTwo() {
+    private void armUpStageTwo() {
         if (currentArmState == 2) {
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             arm.setTargetPosition(-stageTwoTicks);
@@ -58,7 +57,7 @@ public class Arm {
         }
     }
 
-    public void armDownStageOne() {
+    private void armDownStageOne() {
         if (currentArmState == 3) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -69,7 +68,7 @@ public class Arm {
         }
     }
 
-    public void armDownStageTwo() {
+    private void armDownStageTwo() {
         if (currentArmState == 2) {
             scoop.setPosition(scoopOpenPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
