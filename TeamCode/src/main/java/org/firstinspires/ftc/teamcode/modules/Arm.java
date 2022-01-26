@@ -26,11 +26,11 @@ public class Arm {
     private final double armDownPower = 0.5;
 
     public Arm(HardwareMap hwMap, Gamepad gamepad1) {
-        scoop.setPosition(scoopOpenPos);
         this.hwMap = hwMap;
         this.gamepad1 = gamepad1;
         this.scoop = hwMap.get(Servo.class, "scoop");
         this.arm = hwMap.get(DcMotor.class, "arm");
+        scoop.setPosition(scoopOpenPos);
     }
 
     private void armUpStageOne() {
