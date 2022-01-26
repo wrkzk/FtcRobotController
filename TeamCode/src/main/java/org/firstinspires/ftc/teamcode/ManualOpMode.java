@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.teamcode.modules.Arm;
 import org.firstinspires.ftc.teamcode.modules.Drivetrain;
 
@@ -12,6 +11,7 @@ public class ManualOpMode extends LinearOpMode {
 
     private HardwareMap hwMap;
 
+    @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
