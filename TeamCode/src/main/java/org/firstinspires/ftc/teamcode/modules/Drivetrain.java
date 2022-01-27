@@ -27,13 +27,18 @@ public class Drivetrain {
     }
 
     public void update() {
-        double wheelPower = gamepad1.right_stick_x * powerScale;
-        double turnPower = -gamepad1.left_stick_y * powerScale;
+        double wheelPower = 0;
+        if (gamepad1.left_stick_y > 0) {
+            wheelPower = Math.sqrt(gamepad1.left_stick_y) * powerScale;
+        } else if (gamepad1.left_stick_y < 0) {
+            wheelPower = -1 * Math.sqrt(-1 * gamepad1.left_stick_y) * powerScale;
+        }
+        double turnPower = gamepad1.right_stick_x * powerScale;
 
         frontLeft.setPower(wheelPower - turnPower);
-        frontRight.setPower(wheelPower + turnPower);
+        frontRight.setPower(-wheelPower - turnPower);
         backLeft.setPower(wheelPower - turnPower);
-        backRight.setPower(wheelPower + turnPower);
+        backRight.setPower(-wheelPower - turnPower);
     }
 
 }
