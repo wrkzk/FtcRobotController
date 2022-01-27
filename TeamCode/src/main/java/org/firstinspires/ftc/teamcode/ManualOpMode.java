@@ -11,17 +11,15 @@ import org.firstinspires.ftc.teamcode.modules.Spinner;
 @TeleOp(name = "Driver-Controlled OpMode", group = "")
 public class ManualOpMode extends LinearOpMode {
 
-    private HardwareMap hwMap;
-
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Arm arm = new Arm(hwMap, gamepad1);
-        Drivetrain drive = new Drivetrain(hwMap, gamepad1);
-        Intake intake = new Intake(hwMap, gamepad1);
-        Spinner spinner = new Spinner(hwMap, gamepad1);
+        Arm arm = new Arm(hardwareMap, gamepad1);
+        Drivetrain drive = new Drivetrain(hardwareMap, gamepad1);
+        Intake intake = new Intake(hardwareMap, gamepad1);
+        Spinner spinner = new Spinner(hardwareMap, gamepad1);
 
         waitForStart();
 
