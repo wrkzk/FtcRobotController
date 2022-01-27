@@ -27,5 +27,7 @@ public class Intake {
             rightIntake.setPower(-1);
             rightIntake.setPower(-1);
         }
+        rightIntake.setPower(0);
+        leftIntake.setPower(0);
     }
 }
