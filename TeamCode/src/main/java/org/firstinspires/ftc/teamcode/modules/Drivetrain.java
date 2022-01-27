@@ -14,7 +14,7 @@ public class Drivetrain {
     private DcMotor backLeft;
     private DcMotor backRight;
 
-    private final double powerScale = 1;
+    private final double powerScale = 0.5;
 
     public Drivetrain(HardwareMap hwMap, Gamepad gamepad1) {
         this.hwMap = hwMap;
@@ -27,13 +27,13 @@ public class Drivetrain {
     }
 
     public void update() {
-        double wheelPower = gamepad1.left_stick_y * powerScale;
-        double turnPower = gamepad1.right_stick_x * powerScale;
+        double wheelPower = gamepad1.right_stick_x * powerScale;
+        double turnPower = -gamepad1.left_stick_y * powerScale;
 
-        frontLeft.setPower(wheelPower + turnPower);
-        frontRight.setPower(wheelPower - turnPower);
-        backLeft.setPower(wheelPower + turnPower);
-        backRight.setPower(wheelPower - turnPower);
+        frontLeft.setPower(wheelPower - turnPower);
+        frontRight.setPower(wheelPower + turnPower);
+        backLeft.setPower(wheelPower - turnPower);
+        backRight.setPower(wheelPower + turnPower);
     }
 
 }
