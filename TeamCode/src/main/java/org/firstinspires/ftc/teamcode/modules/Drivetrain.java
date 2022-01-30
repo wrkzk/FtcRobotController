@@ -26,6 +26,37 @@ public class Drivetrain {
         this.backRight = hwMap.get(DcMotor.class, "br");
     }
 
+    private void driveForTicks(double power, int flTicks, int frTicks, int blTicks, int brTicks) {
+        DcMotor[] motors = new DcMotor[] {frontLeft, frontRight, backLeft, backRight};
+        int[] motorTicks = new int[] {flTicks, frTicks, blTicks, brTicks};
+
+        for (int i = 0; i < motors.length; i++) {
+            motors[i].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motors[i].setTargetPosition(motorTicks[i]);
+            motors[i].setPower(power);
+        }
+
+        for (DcMotor motor : motors) {
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+    }
+
+    public void turnRight(int ticks, double power) {
+        driveForTicks(power, ticks, ticks, ticks, ticks);
+    }
+
+    public void turnLeft(int ticks, double power) {
+        driveForTicks(power, -ticks, -ticks, -ticks, -ticks);
+    }
+
+    public void driveStraight(int ticks, double power) {
+        driveForTicks(power, ticks, -ticks, ticks, -ticks);
+    }
+
+    public void driveReverse(int ticks, double power) {
+        driveForTicks(power, -ticks, ticks, -ticks, ticks);
+    }
+
     public void update() {
         double wheelPower = 0;
         if (gamepad1.left_stick_y > 0) {
