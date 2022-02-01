@@ -25,7 +25,7 @@ public class Intake {
             leftIntake.setPower(1);
         } else if (gamepad1.y && !gamepad1.x) {
             rightIntake.setPower(-1);
-            rightIntake.setPower(-1);
+            leftIntake.setPower(-1);
         }
         rightIntake.setPower(0);
         leftIntake.setPower(0);
