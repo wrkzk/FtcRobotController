@@ -39,22 +39,31 @@ public class Drivetrain {
         for (DcMotor motor : motors) {
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+
+        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {}
     }
 
     public void turnRight(int ticks, double power) {
-        driveForTicks(power, ticks, ticks, ticks, ticks);
-    }
-
-    public void turnLeft(int ticks, double power) {
         driveForTicks(power, -ticks, -ticks, -ticks, -ticks);
     }
 
+    public void turnLeft(int ticks, double power) {
+        driveForTicks(power, ticks, ticks, ticks, ticks);
+    }
+
     public void driveStraight(int ticks, double power) {
-        driveForTicks(power, ticks, -ticks, ticks, -ticks);
+        driveForTicks(power, -ticks, ticks, -ticks, ticks);
     }
 
     public void driveReverse(int ticks, double power) {
-        driveForTicks(power, -ticks, ticks, -ticks, ticks);
+        driveForTicks(power, ticks, -ticks, ticks, -ticks);
+    }
+
+    public void resetMotors() {
+        DcMotor[] motors = new DcMotor[] {frontLeft, frontRight, backLeft, backRight};
+        for (DcMotor motor : motors) {
+            motor.setPower(0);
+        }
     }
 
     public void update() {
