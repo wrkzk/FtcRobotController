@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.lang.InterruptedException;
+
 public class Arm {
 
     private HardwareMap hwMap;
@@ -33,48 +35,102 @@ public class Arm {
         scoop.setPosition(scoopOpenPos);
     }
 
-    private void armUpStageOne() {
+    public void armUpStageOne() {
         if (currentArmState == 1) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             arm.setTargetPosition(-stageOneTicks);
             arm.setPower(stageOnePower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (arm.isBusy()) {}
+            scoop.setPosition(scoopClosedPos);
             currentArmState = 2;
         }
     }
 
-    private void armUpStageTwo() {
+    public void armUpStageTwo() {
         if (currentArmState == 2) {
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             arm.setTargetPosition(-stageTwoTicks);
             arm.setPower(stageTwoPower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (!arm.isBusy()) {
-                scoop.setPosition(scoopDropPos);
-                currentArmState = 3;
-            }
+            while (arm.isBusy()) {}
+            scoop.setPosition(scoopDropPos);
+            currentArmState = 3;
         }
     }
 
-    private void armDownStageOne() {
+    public void armUpLevelOne() throws InterruptedException {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(-450);
+        arm.setPower(stageTwoPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (arm.isBusy()) {}
+        scoop.setPosition(scoopDropPos);
+        Thread.sleep(1500);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(450);
+        arm.setPower(armDownPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scoop.setPosition(scoopClosedPos);
+        while (arm.isBusy()) {}
+    }
+
+    public void armUpLevelTwo() throws InterruptedException {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(-575);
+        arm.setPower(stageTwoPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (arm.isBusy()) {}
+        scoop.setPosition(scoopDropPos);
+        Thread.sleep(1500);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(575);
+        arm.setPower(armDownPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scoop.setPosition(scoopClosedPos);
+        while (arm.isBusy()) {}
+    }
+
+    public void armUpLevelThree() throws InterruptedException {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(-695);
+        arm.setPower(stageTwoPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (arm.isBusy()) {}
+        scoop.setPosition(scoopDropPos);
+        Thread.sleep(1500);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(695);
+        arm.setPower(armDownPower);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scoop.setPosition(scoopClosedPos);
+        while (arm.isBusy()) {}
+    }
+
+    public void armDownStageOne() {
         if (currentArmState == 3) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             arm.setTargetPosition(stageTwoTicks);
             arm.setPower(armDownPower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (arm.isBusy()) {}
             currentArmState = 2;
         }
     }
 
-    private void armDownStageTwo() {
+    public void armDownStageTwo() {
         if (currentArmState == 2) {
             scoop.setPosition(scoopOpenPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             arm.setTargetPosition(stageOneTicks);
             arm.setPower(armDownPower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (arm.isBusy()) {}
             currentArmState = 1;
         }
     }
