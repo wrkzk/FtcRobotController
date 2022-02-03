@@ -36,14 +36,8 @@ public class AutonomousOpMode extends LinearOpMode {
 
         if (tfod != null) {
             tfod.activate();
-            tfod.setZoom(1, 16.0/9.0);
+            tfod.setZoom(1, 16.0 / 9.0);
         }
-
-        telemetry.addData(">", "Press Play to start op mode");
-        telemetry.update();
-
-        boolean duckFound = false;
-        int numOfPasses = 0;
 
         Arm arm = new Arm(hardwareMap, gamepad1);
         Drivetrain drive = new Drivetrain(hardwareMap, gamepad1);
@@ -53,57 +47,21 @@ public class AutonomousOpMode extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            while (!duckFound) {
-                if (tfod != null) {
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-
-                    if (numOfPasses > 1000) {
-                        if (updatedRecognitions != null) {
-                            for (Recognition recognition : updatedRecognitions) {
-                                if (recognition.getLabel().equals("Duck")) {
-                                    if (recognition.getLeft() < 200) {
-                                        targetLevel = 2;
-                                        if (numOfPasses > 1500) {
-                                            duckFound = true;
-                                        }
-                                    } else if (recognition.getLeft() > 200) {
-                                        targetLevel = 3;
-                                        if (numOfPasses > 1500) {
-                                            duckFound = true;
-                                        }
-                                    }
-                                }
-                            }
-                            if (duckFound == false) {
-                                targetLevel = 1;
-                                if (numOfPasses > 1500) {
-                                    duckFound = true;
-                                }
-                            }
-                        }
-                    }
-                    numOfPasses++;
-
-                }
-
-                telemetry.addData("Target Level", targetLevel);
-                telemetry.update();
-            }
+            getTargetLevel();
 
             drive.driveStraight(75, motorPower);
-            //drive.resetMotors();
+
             Thread.sleep(200);
             drive.turnRight(250, motorPower);
-            //drive.resetMotors();
+
             Thread.sleep(200);
             drive.driveStraight(400, motorPower);
-            //drive.resetMotors();
+
             Thread.sleep(200);
             drive.turnRight(300, motorPower);
-            //drive.resetMotors();
+
             Thread.sleep(200);
             drive.driveReverse(110, motorPower);
-            //drive.resetMotors();
 
             drive.driveReverse(1, 0.01);
 
@@ -138,5 +96,47 @@ public class AutonomousOpMode extends LinearOpMode {
         tfodParameters.inputSize = 320;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
+    }
+
+    private void getTargetLevel() {
+        boolean duckFound = false;
+        int numOfPasses = 0;
+
+        while (!duckFound) {
+            if (tfod != null) {
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+
+                if (numOfPasses > 1000) {
+                    if (updatedRecognitions != null) {
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel().equals("Duck")) {
+                                if (recognition.getLeft() < 200) {
+                                    targetLevel = 2;
+                                    if (numOfPasses > 1500) {
+                                        duckFound = true;
+                                    }
+                                } else if (recognition.getLeft() > 200) {
+                                    targetLevel = 3;
+                                    if (numOfPasses > 1500) {
+                                        duckFound = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (duckFound == false) {
+                            targetLevel = 1;
+                            if (numOfPasses > 1500) {
+                                duckFound = true;
+                            }
+                        }
+                    }
+                }
+                numOfPasses++;
+
+            }
+
+            telemetry.addData("Target Level", targetLevel);
+            telemetry.update();
+        }
     }
 }
