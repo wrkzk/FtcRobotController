@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Spinner {
+public class Spinner implements Component {
 
     private HardwareMap hwMap;
     private Gamepad gamepad1;
@@ -16,6 +16,7 @@ public class Spinner {
         this.spinner = hwMap.get(DcMotor.class, "spinner");
     }
 
+    // Update the duck spinner power based on the trigger power
     public void update() {
         double spinnerPower = -gamepad1.right_trigger;
         spinner.setPower(spinnerPower);

@@ -7,22 +7,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.lang.InterruptedException;
 
-public class Arm {
+public class Arm implements Component {
 
     private HardwareMap hwMap;
     private Gamepad gamepad1;
 
     private Servo scoop;
     private DcMotor arm;
+
+    // Variable to keep track of the current arm position
     private int currentArmState = 1;
 
+    // Power and motor tick variables for each level
     private final double scoopOpenPos = 0.085;
     private final double scoopClosedPos = 0.3;
     private final double scoopDropPos = 0.95;
-
     private final int stageOneTicks = 80;
     private final int stageTwoTicks = 695;
-
     private final double stageOnePower = 0.5;
     private final double stageTwoPower = 0.7;
     private final double armDownPower = 0.5;
@@ -35,6 +36,7 @@ public class Arm {
         scoop.setPosition(scoopOpenPos);
     }
 
+    // Move the arm from the collecting position to the storing position
     public void armUpStageOne() {
         if (currentArmState == 1) {
             scoop.setPosition(scoopClosedPos);
@@ -48,6 +50,7 @@ public class Arm {
         }
     }
 
+    // Move the arm from the storing position to the dropping position
     public void armUpStageTwo() {
         if (currentArmState == 2) {
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -60,6 +63,7 @@ public class Arm {
         }
     }
 
+    // Move the arm from the storing position to the first level of the shipping hub, and back down
     public void armUpLevelOne() throws InterruptedException {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setTargetPosition(-450);
@@ -77,6 +81,7 @@ public class Arm {
         while (arm.isBusy()) {}
     }
 
+    // Move the arm from the storing position to the second level of the shipping hub, and back down
     public void armUpLevelTwo() throws InterruptedException {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setTargetPosition(-575);
@@ -94,12 +99,14 @@ public class Arm {
         while (arm.isBusy()) {}
     }
 
+    // Move the arm from the storing position to the third level of the shipping hub, and back down
     public void armUpLevelThree() throws InterruptedException {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setTargetPosition(-695);
         arm.setPower(stageTwoPower);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (arm.isBusy()) {}
+        while (arm.isBusy()) {
+        }
         scoop.setPosition(scoopDropPos);
         Thread.sleep(1500);
 
@@ -108,9 +115,11 @@ public class Arm {
         arm.setPower(armDownPower);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         scoop.setPosition(scoopClosedPos);
-        while (arm.isBusy()) {}
+        while (arm.isBusy()) {
+        }
     }
 
+    // Move the arm from the dropping position to the storing position
     public void armDownStageOne() {
         if (currentArmState == 3) {
             scoop.setPosition(scoopClosedPos);
@@ -123,6 +132,7 @@ public class Arm {
         }
     }
 
+    // Move the arm from the storing position to the collecting position
     public void armDownStageTwo() {
         if (currentArmState == 2) {
             scoop.setPosition(scoopOpenPos);
@@ -135,6 +145,7 @@ public class Arm {
         }
     }
 
+    // Keep track of the current arm state, and move the arm according to the LB and RB presses
     public void update() {
         if (gamepad1.right_bumper && currentArmState == 1) {
             armUpStageOne();

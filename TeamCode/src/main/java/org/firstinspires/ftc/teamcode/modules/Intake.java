@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Intake {
+public class Intake implements Component {
 
     private HardwareMap hwMap;
     private Gamepad gamepad1;
@@ -19,6 +19,7 @@ public class Intake {
         this.rightIntake = hwMap.get(DcMotor.class, "rightIntake");
     }
 
+    // Update the motor power for intake based on the x and y gamepad buttons
     public void update() {
         if (gamepad1.x && !gamepad1.y) {
             rightIntake.setPower(1);
