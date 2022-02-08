@@ -8,48 +8,48 @@ import org.firstinspires.ftc.teamcode.modules.Drivetrain;
 import org.firstinspires.ftc.teamcode.modules.Intake;
 import org.firstinspires.ftc.teamcode.modules.Spinner;
 
-class DrivetrainThread extends Thread {
-
-    Drivetrain drive;
-
-    public DrivetrainThread(Drivetrain drive) {
-        this.drive = drive;
-    }
-
-    public void run() {
-        while (true) {
-            try {
-                drive.update();
-            } catch (Exception e) {}
-        }
-    }
-}
-
-class ManipulatorThread extends Thread {
-
-    Arm arm;
-    Intake intake;
-    Spinner spinner;
-
-    public ManipulatorThread(Arm arm, Intake intake, Spinner spinner) {
-        this.arm = arm;
-        this.intake = intake;
-        this.spinner = spinner;
-    }
-
-    public void run() {
-        while (true) {
-            try {
-                arm.update();
-                intake.update();
-                spinner.update();
-            } catch (Exception e) {}
-        }
-    }
-}
-
 @TeleOp(name = "Driver-Controlled OpMode", group = "")
 public class ManualOpMode extends LinearOpMode {
+
+    class DrivetrainThread extends Thread {
+
+        Drivetrain drive;
+
+        public DrivetrainThread(Drivetrain drive) {
+            this.drive = drive;
+        }
+
+        public void run() {
+            while (opModeIsActive()) {
+                try {
+                    drive.update();
+                } catch (Exception e) {}
+            }
+        }
+    }
+
+    class ManipulatorThread extends Thread {
+
+        Arm arm;
+        Intake intake;
+        Spinner spinner;
+
+        public ManipulatorThread(Arm arm, Intake intake, Spinner spinner) {
+            this.arm = arm;
+            this.intake = intake;
+            this.spinner = spinner;
+        }
+
+        public void run() {
+            while (opModeIsActive()) {
+                try {
+                    arm.update();
+                    intake.update();
+                    spinner.update();
+                } catch (Exception e) {}
+            }
+        }
+    }
 
     @Override
     public void runOpMode() {
@@ -61,6 +61,7 @@ public class ManualOpMode extends LinearOpMode {
         Intake intake = new Intake(hardwareMap, gamepad2);
         Spinner spinner = new Spinner(hardwareMap, gamepad2);
 
+        // Initialize two threads, one for updating the drivetrain, and one for the manipulator
         DrivetrainThread drivetrain = new DrivetrainThread(drive);
         ManipulatorThread manipulators = new ManipulatorThread(arm, intake, spinner);
 
@@ -70,10 +71,5 @@ public class ManualOpMode extends LinearOpMode {
             drivetrain.start();
             manipulators.start();
         }
-
-        while (opModeIsActive());
-
-        drivetrain.stop();
-        manipulators.stop();
     }
 }
