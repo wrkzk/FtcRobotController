@@ -60,5 +60,7 @@ public class ManualOpMode extends LinearOpMode {
             drivetrainThread.start();
             manipulatorThread.start();
         }
+
+        while (opModeIsActive());
     }
 }
