@@ -90,22 +90,26 @@ public class AutonomousOpMode extends LinearOpMode {
                 telemetry.update();
             }
 
-            drive.driveStraight(75, motorPower);
+            //drive.driveStraight(75, motorPower);
+            drive.driveStraight(190, motorPower);
             //drive.resetMotors();
-            Thread.sleep(200);
-            drive.turnRight(250, motorPower);
+            Thread.sleep(300);
+            //drive.turnRight(250, motorPower);
+            drive.turnRight(240, motorPower);
             //drive.resetMotors();
-            Thread.sleep(200);
-            drive.driveStraight(400, motorPower);
+            Thread.sleep(300);
+            //drive.driveStraight(400, motorPower);
+            drive.driveStraight(335, motorPower);
             //drive.resetMotors();
-            Thread.sleep(200);
-            drive.turnRight(300, motorPower);
+            Thread.sleep(300);
+            drive.turnRight(260, motorPower);
             //drive.resetMotors();
-            Thread.sleep(200);
-            drive.driveReverse(110, motorPower);
+            Thread.sleep(300);
+            //drive.driveReverse(110, motorPower);
+            drive.driveReverse(460, motorPower);
             //drive.resetMotors();
 
-            drive.driveReverse(1, 0.01);
+            //drive.driveReverse(1, 0.01);
 
             if (targetLevel == 1) {
                 arm.armUpLevelOne();
@@ -115,9 +119,9 @@ public class AutonomousOpMode extends LinearOpMode {
                 arm.armUpLevelThree();
             }
 
-            Thread.sleep(200);
-            drive.turnLeft(260, motorPower);
-            Thread.sleep(200);
+            Thread.sleep(300);
+            drive.turnLeft(285, motorPower);
+            Thread.sleep(300);
             drive.driveStraight(1600, 0.5);
             arm.armDownStageTwo();
         }
