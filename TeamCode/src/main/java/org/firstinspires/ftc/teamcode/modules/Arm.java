@@ -23,10 +23,11 @@ public class Arm implements Component {
     private final double scoopClosedPos = 0.3;
     private final double scoopDropPos = 0.95;
     private final int stageOneTicks = 80;
-    private final int stageTwoTicks = 695;
+    //private final int stageTwoTicks = 695;
+    private final int stageTwoTicks = 690;
     private final double stageOnePower = 0.5;
-    private final double stageTwoPower = 0.7;
-    private final double armDownPower = 0.5;
+    private final double stageTwoPower = 0.8;
+    private final double armDownPower = 0.75;
 
     public Arm(HardwareMap hwMap, Gamepad gamepad1) {
         this.hwMap = hwMap;
@@ -41,7 +42,7 @@ public class Arm implements Component {
         if (currentArmState == 1) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            arm.setTargetPosition(-stageOneTicks);
+            arm.setTargetPosition(-stageOneTicks - 5);
             arm.setPower(stageOnePower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (arm.isBusy()) {}
@@ -84,7 +85,7 @@ public class Arm implements Component {
     // Move the arm from the storing position to the second level of the shipping hub, and back down
     public void armUpLevelTwo() throws InterruptedException {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setTargetPosition(-575);
+        arm.setTargetPosition(-565);
         arm.setPower(stageTwoPower);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (arm.isBusy()) {}
@@ -92,7 +93,7 @@ public class Arm implements Component {
         Thread.sleep(1500);
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setTargetPosition(575);
+        arm.setTargetPosition(565);
         arm.setPower(armDownPower);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         scoop.setPosition(scoopClosedPos);
@@ -124,7 +125,7 @@ public class Arm implements Component {
         if (currentArmState == 3) {
             scoop.setPosition(scoopClosedPos);
             arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            arm.setTargetPosition(stageTwoTicks);
+            arm.setTargetPosition(stageTwoTicks - 65);
             arm.setPower(armDownPower);
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while (arm.isBusy()) {}
@@ -156,5 +157,13 @@ public class Arm implements Component {
         } else if (gamepad1.left_bumper && currentArmState == 3) {
             armDownStageOne();
         }
+
+        if (gamepad1.dpad_up) {
+            arm.setPower(-0.4);
+        } else if (gamepad1.dpad_down) {
+            arm.setPower(0.2);
+        }
+
+        arm.setPower(0);
     }
 }

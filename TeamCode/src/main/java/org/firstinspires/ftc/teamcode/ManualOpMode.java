@@ -47,7 +47,8 @@ public class ManualOpMode extends LinearOpMode {
 
         // Initialize the drivetrain thread and the manipulators thread
         ComponentThread drivetrainThread = new ComponentThread(new Component[] {drive});
-        ComponentThread manipulatorThread = new ComponentThread(new Component[] {arm, intake, spinner});
+        ComponentThread armThread = new ComponentThread(new Component[] {arm, spinner});
+        ComponentThread intakeThread = new ComponentThread(new Component[] {intake});
 
         // Alert the user that the program has initialized
         telemetry.addData("Status", "Initialized");
@@ -58,7 +59,8 @@ public class ManualOpMode extends LinearOpMode {
         // Once the user starts the program, start the threads for each subsystem
         if (opModeIsActive()) {
             drivetrainThread.start();
-            manipulatorThread.start();
+            armThread.start();
+            intakeThread.start();
         }
 
         while (opModeIsActive());
