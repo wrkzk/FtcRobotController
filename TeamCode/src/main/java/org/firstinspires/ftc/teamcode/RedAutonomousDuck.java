@@ -44,7 +44,7 @@ public class RedAutonomousDuck extends LinearOpMode{
                 }
             }
         }
-    }
+    }Update everything
 
     private double motorPower = .4;
 

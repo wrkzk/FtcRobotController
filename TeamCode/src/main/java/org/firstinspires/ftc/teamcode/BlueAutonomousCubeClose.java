@@ -93,23 +93,21 @@ public class BlueAutonomousCubeClose extends LinearOpMode {
             }
 
             //drive.driveStraight(75, motorPower);
-            drive.driveStraight(200, motorPower);
+            drive.driveStraight(600, motorPower);
             //drive.resetMotors();
             Thread.sleep(300);
             //drive.turnRight(250, motorPower);
+            drive.driveReverse(400, motorPower);
+            //drive.resetMotors();
+            Thread.sleep(300);
+
             drive.turnRight(240, motorPower);
-            //drive.resetMotors();
             Thread.sleep(300);
-            //drive.driveStraight(400, motorPower);
-            drive.driveStraight(360, motorPower);
-            //drive.resetMotors();
+            drive.driveStraight(300, motorPower);
             Thread.sleep(300);
-            drive.turnRight(260, motorPower);
-            //drive.resetMotors();
+            drive.turnRight(240, motorPower);
             Thread.sleep(300);
-            //drive.driveReverse(110, motorPower);
-            drive.driveReverse(390, motorPower);
-            //drive.resetMotors();
+            drive.driveReverse(400, motorPower);
 
             drive.resetMotors();
 
@@ -135,11 +133,16 @@ public class BlueAutonomousCubeClose extends LinearOpMode {
             //drive.driveReverse(250, motorPower);
             //spinner.spin(5000);
 
-
-            drive.turnRight(260, motorPower);
-            Thread.sleep(300);
-            drive.driveStraight(1600, 0.5);
-            arm.armDownStageTwo();
+            if (targetLevel == 3) {
+                drive.turnLeft(295, motorPower);
+                Thread.sleep(300);
+                drive.driveStraight(1075, motorPower);
+            } else {
+                drive.turnRight(230, motorPower);
+                Thread.sleep(300);
+                drive.driveStraight(1600, 0.5);
+                arm.armDownStageTwo();
+            }
         }
     }
 
